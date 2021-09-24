@@ -1,6 +1,12 @@
+<%= notice %>
 <h1>Tipos de Imóveis</h1>
-<%= @property_types.each do |p| %>
-  <%= p.description %>
-<% end %>
+<div>
+  Tipos:  
+  <ul>
+    <% @property_types.each do |p| %>
+      <li><%= p.description %></li>
+    <% end %>
+  </ul>
+</div>
 
 <nav> <%= link_to 'Novo Tipo de Imóvel', new_property_type_path %></nav>

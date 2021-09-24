@@ -1,4 +1,5 @@
 class PropertyTypesController < ApplicationController
+  
   def index
     @property_types = PropertyType.all
   end
@@ -8,7 +9,12 @@ class PropertyTypesController < ApplicationController
   end
 
   def create
-    prop = PropertyType.create(params.require(:property_type).permit(:description))
-    redirect_to property_types_path
+    @property_type = PropertyType.new(params.require(:property_type).permit(:description))
+    
+    if @property_type.save
+      redirect_to property_types_path, notice: "Tipo de imóvel Criado com sucesso."
+    else
+      render 'new'
+    end
   end
 end

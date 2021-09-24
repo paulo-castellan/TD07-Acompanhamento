@@ -1,3 +1,12 @@
+<% if @property_type.errors.any? %>
+  <h3>Erros foram!</h3>
+  <ul>
+    <% @property_type.errors.full_messages.each do |msg| %>
+      <li><%= msg %></li>
+    <% end %>
+  </ul>
+<% end %>
+
 <h1>Cadastro de Tipo de Imóvel</h1>
 <%= form_with(model: @property_type) do |f| %>
   <div>
