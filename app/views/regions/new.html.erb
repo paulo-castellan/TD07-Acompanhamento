@@ -1,0 +1,18 @@
+<% if @region.errors.any? %>
+  <h3>Erros foram:</h3>
+  <ul>
+    <% @region.errors.full_messages.each do |msg| %>
+      <li><%= msg %></li>
+    <% end %>
+  </ul>
+<% end %>
+
+<h1>Cadastro de Localidade de Propriedades</h1>
+<%= form_with(model: @region) do |f| %>
+  <div>
+    <%= f.label :property_location, 'Localidade:' %>
+    <%= f.text_field :property_location %>
+  </div>
+  <%= f.submit 'Enviar' %>
+<% end %>
+

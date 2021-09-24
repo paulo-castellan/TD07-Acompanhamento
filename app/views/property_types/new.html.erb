@@ -1,5 +1,5 @@
 <% if @property_type.errors.any? %>
-  <h3>Erros foram!</h3>
+  <h3>Erros foram:</h3>
   <ul>
     <% @property_type.errors.full_messages.each do |msg| %>
       <li><%= msg %></li>

@@ -1,0 +1,12 @@
+<%= notice %>
+<h1>Regiões das propriedades</h1>
+<div>
+  Regiões:  
+  <ul>
+    <% @regions.each do |p| %>
+      <li><%= p.property_location %></li>
+    <% end %>
+  </ul>
+</div>
+
+<nav> <%= link_to 'Nova Região de Locação', new_region_path %></nav>
