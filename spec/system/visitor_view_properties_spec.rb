@@ -4,13 +4,13 @@ describe 'Visitor visit homepage' do
   it 'and view properties' do
     #Arrange => Preparar (os dados)
     Property.create({ title: 'Casa com quintal em Copacabana', 
-                      description: 'Excelente casa, recém reformada com 2 vagas de garagem',
-                      rooms: 3, parking_slot: true
+                    description: 'Excelente casa, recém reformada com 2 vagas de garagem',
+                    rooms: 3, bathrooms:2, parking_slot: true, daily_rate: 500
                     })
 
     Property.create({ title: 'Cobertura em Manaus', 
                       description: 'Cobertura de 300m2, churrasqueira e sauna privativa',
-                      rooms: 5, parking_slot: false
+                      rooms: 5, bathrooms:2, parking_slot: false, daily_rate: 500
                     })
 
     #Act => Agir (executar a funcionalidade)
@@ -64,13 +64,15 @@ describe 'Visitor visit homepage' do
 
   it 'and view property details and return to home page' do
     property = Property.create({ title: 'Casa com quintal em Copacabana', 
-                                 description: 'Excelente casa, recém reformada com 2 vagas de garagem',
-                                 rooms: 3, parking_slot: true, bathrooms: 2, pets: true, daily_rate: 500
-                               })
+                                description: 'Excelente casa, recém reformada com 2 vagas de garagem',
+                                rooms: 3, parking_slot: true, bathrooms: 2, pets: true, daily_rate: 500
+                              })
+
     Property.create({ title: 'Cobertura em Manaus', 
                       description: 'Cobertura de 300m2, churrasqueira e sauna privativa',
-                      rooms: 5, parking_slot: false
+                      rooms: 5, parking_slot: true, bathrooms: 2, pets: true, daily_rate: 500
                     })
+                    
     #Act => Agir (executar a funcionalidade)
     visit root_path
     click_on 'Casa com quintal em Copacabana'
@@ -81,5 +83,8 @@ describe 'Visitor visit homepage' do
     expect(page).to have_text('Casa com quintal em Copacabana')
     expect(page).to have_text('Cobertura em Manaus')
   end
+
+  #TODO: verificar que rooms, daily_rate, bathrooms são numéricos
+  #TODO: verificar que rooms, daily_rate, bathrooms, são maiores que zero
 
 end

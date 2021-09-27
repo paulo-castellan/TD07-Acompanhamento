@@ -25,4 +25,13 @@ describe 'Visitor register property' do
     expect(page).to have_content("Estacionamento: Sim")
     expect(page).to have_content("Diária: R$ 200,00")
   end
+
+  it 'and must fill all fields' do
+    visit root_path
+    click_on 'Cadastrar Imóvel'
+    click_on 'Enviar'
+
+    expect(page).to have_content('não pode ficar em branco', count: 5)
+    expect(Property.count).to eq(0)
+  end
 end
