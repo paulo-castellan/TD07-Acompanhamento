@@ -31,7 +31,7 @@ describe 'Visitor register property type' do
 
   it 'receive an error message when tries to register an already registered region' do
     
-    Region.create({property_location: 'Recife'})
+    Region.create!({property_location: 'Recife'})
     
     visit root_path
     visit root_path

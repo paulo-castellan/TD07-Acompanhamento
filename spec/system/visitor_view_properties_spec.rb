@@ -3,15 +3,19 @@ require 'rails_helper'
 describe 'Visitor visit homepage' do
   it 'and view properties' do
     #Arrange => Preparar (os dados)
-    Property.create({ title: 'Casa com quintal em Copacabana', 
+    casa = PropertyType.create!(description: 'Casa')
+    apartamento = PropertyType.create!(description: 'Apartamento')
+    Property.create!( title: 'Casa com quintal em Copacabana', 
                     description: 'Excelente casa, recém reformada com 2 vagas de garagem',
-                    rooms: 3, bathrooms:2, parking_slot: true, daily_rate: 500
-                    })
+                    rooms: 3, parking_slot: true, bathrooms: 2, pets: true, daily_rate: 500,
+                    property_type: casa
+                    )
 
-    Property.create({ title: 'Cobertura em Manaus', 
-                      description: 'Cobertura de 300m2, churrasqueira e sauna privativa',
-                      rooms: 5, bathrooms:2, parking_slot: false, daily_rate: 500
-                    })
+    Property.create!(title: 'Cobertura em Manaus', 
+                    description: 'Cobertura de 300m2, churrasqueira e sauna privativa',
+                    rooms: 5, bathrooms:2, parking_slot: false, daily_rate: 500, pets: true,
+                    property_type: apartamento
+                    )
 
     #Act => Agir (executar a funcionalidade)
     visit root_path
@@ -37,15 +41,19 @@ describe 'Visitor visit homepage' do
 
   it 'and view property details' do
     #Arrange => Preparar (os dados)
-    property = Property.create({ title: 'Casa com quintal em Copacabana', 
-                      description: 'Excelente casa, recém reformada com 2 vagas de garagem',
-                      rooms: 3, parking_slot: true, bathrooms: 2, pets: true, daily_rate: 500
-                    })
+    casa = PropertyType.create!(description: 'Casa')
+    apartamento = PropertyType.create!(description: 'Apartamento')
+    Property.create!( title: 'Casa com quintal em Copacabana', 
+                    description: 'Excelente casa, recém reformada com 2 vagas de garagem',
+                    rooms: 3, parking_slot: true, bathrooms: 2, pets: true, daily_rate: 500,
+                    property_type: casa
+                    )
 
-    Property.create({ title: 'Cobertura em Manaus', 
+    Property.create!(title: 'Cobertura em Manaus', 
                     description: 'Cobertura de 300m2, churrasqueira e sauna privativa',
-                    rooms: 5, parking_slot: false
-                  })
+                    rooms: 5, bathrooms:2, parking_slot: false, daily_rate: 500, pets: true,
+                    property_type: apartamento
+                    )
 
     #Act => Agir (executar a funcionalidade)
     visit root_path
@@ -63,14 +71,16 @@ describe 'Visitor visit homepage' do
   end
 
   it 'and view property details and return to home page' do
-    property = Property.create({ title: 'Casa com quintal em Copacabana', 
-                                description: 'Excelente casa, recém reformada com 2 vagas de garagem',
-                                rooms: 3, parking_slot: true, bathrooms: 2, pets: true, daily_rate: 500
-                              })
-
+    PropertyType.create({description: 'Casa'})
+    Property.create!({ title: 'Casa com quintal em Copacabana', 
+                    description: 'Excelente casa, recém reformada com 2 vagas de garagem',
+                    rooms: 3, parking_slot: true, bathrooms: 2, pets: true, daily_rate: 500,
+                    property_type_id: 1
+                    })
     Property.create({ title: 'Cobertura em Manaus', 
                       description: 'Cobertura de 300m2, churrasqueira e sauna privativa',
-                      rooms: 5, parking_slot: true, bathrooms: 2, pets: true, daily_rate: 500
+                      rooms: 5, parking_slot: true, bathrooms: 2, pets: true, daily_rate: 500,
+                      property_type_id: 1
                     })
                     
     #Act => Agir (executar a funcionalidade)
@@ -83,8 +93,5 @@ describe 'Visitor visit homepage' do
     expect(page).to have_text('Casa com quintal em Copacabana')
     expect(page).to have_text('Cobertura em Manaus')
   end
-
-  #TODO: verificar que rooms, daily_rate, bathrooms são numéricos
-  #TODO: verificar que rooms, daily_rate, bathrooms, são maiores que zero
 
 end

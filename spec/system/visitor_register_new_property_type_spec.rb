@@ -31,7 +31,7 @@ describe 'Visitor register property type' do
 
   it 'receive an error message when tries to register an already registered property type' do
     
-    PropertyType.create({description: 'flats'})
+    PropertyType.create!({description: 'flats'})
     
     visit root_path
     visit root_path
