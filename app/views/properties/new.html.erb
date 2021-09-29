@@ -24,6 +24,14 @@
                             :description,
                             prompt: 'Escolha um tipo' %>
   </div>
+    <div>
+    <%= f.label :region_id, 'Estado: ' %>
+    <%= f.collection_select :region_id,
+                            @regions,
+                            :id,
+                            :property_location,
+                            prompt: 'Escolha um Estado' %>
+  </div>
   <div>
     <%= f.label :rooms, 'Quartos: ' %>
     <%= f.number_field :rooms %>

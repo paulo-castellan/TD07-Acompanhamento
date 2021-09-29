@@ -26,7 +26,7 @@ describe 'Visitor register property type' do
     click_on 'Enviar'
 
     expect(current_path).to eq regions_path
-    expect(page).to have_content('Property location can\'t be blank')
+    expect(page).to have_content('Localização da propriedade não pode ficar em branco')
   end 
 
   it 'receive an error message when tries to register an already registered region' do
@@ -41,7 +41,7 @@ describe 'Visitor register property type' do
     click_on 'Enviar'
 
     expect(current_path).to eq regions_path
-    expect(page).to have_content('Property location has already been taken')
+    expect(page).to have_content('Localização da propriedade já está em uso')
   end
 
 end

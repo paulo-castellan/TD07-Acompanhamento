@@ -4,7 +4,8 @@ describe 'Visitor register property' do
   it 'successfully' do
     #Arrange
     PropertyType.create!(description: 'Casa')
-    
+    Region.create!(property_location: 'Rio de Janeiro')
+
     #Act
     visit root_path
     click_on 'Cadastrar Imóvel'
@@ -14,6 +15,7 @@ describe 'Visitor register property' do
     fill_in 'Banheiros', with: '2'
     fill_in 'Diária', with: 200
     select 'Casa', from: 'Tipo'
+    select 'Rio de Janeiro', from: 'Estado'
     check 'Aceita Pets'
     check 'Vaga de Estacionamento'
     click_on 'Enviar'
@@ -30,13 +32,16 @@ describe 'Visitor register property' do
   end
 
   it 'and must fill all fields' do
-    PropertyType.create!(description: 'Casa')
-
     visit root_path
     click_on 'Cadastrar Imóvel'
     click_on 'Enviar'
 
     expect(page).to have_content('não pode ficar em branco', count: 5)
+    #expect(page).to have_content('Título não pode ficar em branco')
+    #expect(page).to have_content('Descrição não pode ficar em branco')
+    #expect(page).to have_content('Quartos não pode ficar em branco')
+    #expect(page).to have_content('Banheiros não pode ficar em branco')
+    #expect(page).to have_content('Diária não pode ficar em branco')
     expect(Property.count).to eq(0)
   end
     
@@ -44,8 +49,7 @@ describe 'Visitor register property' do
     #TODO: verificar que rooms, daily_rate, bathrooms são numéricos
     #Arrange
     PropertyType.create!(description: 'Casa')
-    PropertyType.create!(description: 'Apartamento')
-  
+    Region.create!(property_location: 'Rio de Janeiro')
   
     # Act
     visit root_path
@@ -56,20 +60,22 @@ describe 'Visitor register property' do
     fill_in 'Banheiros', with: 'numero de banheiros 3'
     fill_in 'Diária', with: 'diaria do imóvel 500'
     select 'Casa', from: 'Tipo'
+    select 'Rio de Janeiro', from: 'Estado'
     check 'Aceita Pets'
     check 'Vaga de Estacionamento'
     click_on 'Enviar'
 
     #Assert
     expect(Property.count).to eq(0)
-    expect(page).to have_content('tem que ser um número maior que 0', count: 3)
+    expect(page).to have_content('Quartos não é um número')
+    expect(page).to have_content('Banheiros não é um número')
+    expect(page).to have_content('Diária não é um número')
     
   end
 
   it 'receive an error when puts bathrooms, rooms or daily rate equal to 0' do
     # Arrange
     PropertyType.create!(description: 'Casa')
-    PropertyType.create!(description: 'Apartamento')
     
     # Act
     visit root_path
@@ -85,7 +91,10 @@ describe 'Visitor register property' do
     click_on 'Enviar'
 
     #Assert
-    expect(page).to have_content('tem que ser um número maior que 0', count: 3)
+    expect(page).to have_content('Quartos deve ser maior que 0')
+    expect(page).to have_content('Banheiros deve ser maior que 0')
+    expect(page).to have_content('Diária deve ser maior que 0')
+    
     expect(Property.count).to eq(0)
   end
 end

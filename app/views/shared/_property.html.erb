@@ -1,0 +1,9 @@
+<% if properties.empty? %>
+  <div>Nenhum imóvel disponível</div>
+<% end %>
+<% properties.each do |property| %>
+  <%= link_to property.title, property %>
+  <%= property.description %>
+  Quartos: <%= property.rooms %>
+  
+<% end %>

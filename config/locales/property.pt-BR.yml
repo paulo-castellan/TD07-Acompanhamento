@@ -1,0 +1,21 @@
+---
+pt-BR:
+  activerecord:
+    models:
+      property: Propriedade
+      region: Região
+      property_type: Tipo de Propriedade
+    attributes:
+      property:
+        title: Título
+        description: Descrição
+        daily_rate: Diária
+        pets: Animal de estimação
+        parking_slot: Vaga de estacionamento
+        rooms: Quartos
+        bathrooms: Banheiros
+      property_type:
+        description: Descrição
+      region:
+        property_location: Localização da propriedade
+        

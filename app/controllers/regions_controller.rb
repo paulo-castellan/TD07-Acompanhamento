@@ -3,6 +3,10 @@ class RegionsController < ApplicationController
     @regions = Region.all
   end
 
+  def show
+    @region = Region.find(params[:id])
+  end
+
   def new
     @region = Region.new
   end

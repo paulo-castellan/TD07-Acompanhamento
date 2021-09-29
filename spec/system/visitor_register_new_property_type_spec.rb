@@ -26,7 +26,7 @@ describe 'Visitor register property type' do
     click_on 'Enviar'
 
     expect(current_path).to eq property_types_path
-    expect(page).to have_content('Description can\'t be blank')
+    expect(page).to have_content('Descrição não pode ficar em branco')
   end 
 
   it 'receive an error message when tries to register an already registered property type' do
@@ -41,7 +41,7 @@ describe 'Visitor register property type' do
     click_on 'Enviar'
 
     expect(current_path).to eq property_types_path
-    expect(page).to have_content('Description has already been taken')
+    expect(page).to have_content('Descrição já está em uso')
   end 
 end
 

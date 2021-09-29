@@ -1,21 +1,23 @@
 require 'rails_helper'
 
-describe 'Visitor filter properties by type' do
+describe 'Visitor filter properties' do
   it 'should view links on nav bar' do
     # Arrange
     apartamento = PropertyType.create!(description: 'Apartamento')
     casa = PropertyType.create!(description: 'Casa')
     sitio = PropertyType.create!(description: 'Sítio')
+    rio_de_janeiro  = Region.create!(property_location: 'Rio de Janeiro')
+    amazonas = Region.create!(property_location: 'Amazonas')
 
     Property.create!( title: 'Casa com quintal em Copacabana', 
                       description: 'Excelente casa, recém reformada com 2 vagas de garagem',
                       rooms: 3, parking_slot: true, bathrooms: 2, pets: true, daily_rate: 500,
-                      property_type: casa
-                      )
+                      property_type: casa, region: rio_de_janeiro  
+                    )
     Property.create!(title: 'Cobertura em Manaus', 
                     description: 'Cobertura de 300m2, churrasqueira e sauna privativa',
                     rooms: 5, bathrooms:2, parking_slot: false, daily_rate: 500, pets: true,
-                    property_type: apartamento
+                    property_type: apartamento, region: amazonas
                     )
     # Act
     visit root_path
@@ -24,23 +26,27 @@ describe 'Visitor filter properties by type' do
     expect(page).to have_link('Apartamento')
     expect(page).to have_link('Casa')
     expect(page).to have_link('Sítio')
+    expect(page).to have_link('Rio de Janeiro')
+    expect(page).to have_link('Amazonas')
   end
 
-  it 'successfully' do
+  it 'of property type successfully' do
     # Arrange
-    apartamento = PropertyType.create!(description: 'Apartamento')
     casa = PropertyType.create!(description: 'Casa')
+    apartamento = PropertyType.create!(description: 'Apartamento')
     sitio = PropertyType.create!(description: 'Sítio')
-
+    rio_de_janeiro  = Region.create!(property_location: 'Rio de Janeiro')
+    amazonas = Region.create!(property_location: 'Amazonas')
+  
     Property.create!( title: 'Casa com quintal em Copacabana', 
                       description: 'Excelente casa, recém reformada com 2 vagas de garagem',
                       rooms: 3, parking_slot: true, bathrooms: 2, pets: true, daily_rate: 500,
-                      property_type: casa
+                      property_type: casa, region: rio_de_janeiro
                       )
     Property.create!(title: 'Cobertura em Manaus', 
                     description: 'Cobertura de 300m2, churrasqueira e sauna privativa',
                     rooms: 5, bathrooms:2, parking_slot: false, daily_rate: 500, pets: true,
-                    property_type: apartamento
+                    property_type: apartamento, region: amazonas
                     )
     # Act
     visit root_path
@@ -50,5 +56,33 @@ describe 'Visitor filter properties by type' do
     expect(page).to have_css('h1', text: 'Imóveis do tipo Casa')
     expect(page).to have_link('Casa com quintal em Copacabana')
     expect(page).not_to have_content('Cobertura em Manaus')
+  end
+
+  it 'of region successfully' do
+    # Arrange
+    apartamento = PropertyType.create!(description: 'Apartamento')
+    casa = PropertyType.create!(description: 'Casa')
+    sitio = PropertyType.create!(description: 'Sítio')
+    rio_de_janeiro  = Region.create!(property_location: 'Rio de Janeiro')
+    amazonas = Region.create!(property_location: 'Amazonas')
+  
+    Property.create!( title: 'Casa com quintal em Copacabana', 
+                      description: 'Excelente casa, recém reformada com 2 vagas de garagem',
+                      rooms: 3, parking_slot: true, bathrooms: 2, pets: true, daily_rate: 500,
+                      property_type: casa, region: rio_de_janeiro
+                      )
+    Property.create!(title: 'Cobertura em Manaus', 
+                    description: 'Cobertura de 300m2, churrasqueira e sauna privativa',
+                    rooms: 5, bathrooms:2, parking_slot: false, daily_rate: 500, pets: true,
+                    property_type: apartamento, region: amazonas
+                    )
+    # Act
+    visit root_path
+    click_on 'Amazonas'
+
+    # Assert
+    expect(page).to have_css('h1', text: 'Imóveis Amazonas')
+    expect(page).to have_link('Cobertura em Manaus')
+    expect(page).not_to have_content('Casa com quintal em Copacabana')
   end
 end

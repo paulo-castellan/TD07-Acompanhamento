@@ -1,10 +1,10 @@
-<header>
+  <header>
   <h1>Flats</h1>
   <h3>Boas vindas ao sistema de locação de apartamentos</h3>
   <nav>
-    <%= link_to 'Cadastrar Imóvel', new_property_path %>
-    <%= link_to 'Tipos de Imóveis', property_types_path %>
-    <%= link_to 'Regiões', regions_path %>
+    <div><%= link_to 'Cadastrar Imóvel', new_property_path %></div>
+    <div><%= link_to 'Tipos de Imóveis', property_types_path %></div>
+    <div><%= link_to 'Regiões', regions_path %></div>
   </nav>
 </header>
 
@@ -12,18 +12,13 @@
   <h2>Filtrar por tipo:</h2>
   <nav>
     <% @property_types.each do |property_type| %>
-      <%= link_to property_type.description, property_type_path(property_type.id) %>
+      <div><%= link_to property_type.description, property_type_path(property_type.id) %></div>
+    <% end %>
+    <% @regions.each do |region| %>
+      <div><%= link_to region.property_location, region_path(region.id) %></div>
     <% end %>
   </nav>
 </aside>
 
-<section>
-  <% if  @properties.empty? %>
-    <div>Nenhum imóvel disponível</div>
-  <% end %>
-  <% @properties.each do |property| %>
-    <%= link_to(property.title, property) %>
-    <%= property.description %>
-    Quartos: <%= property.rooms %>
-  <% end %>
-</section>
+<%= render partial: "shared/property", locals: {properties: @properties }%>
+
