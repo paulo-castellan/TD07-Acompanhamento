@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2021_10_01_183145) do
+ActiveRecord::Schema.define(version: 2021_10_04_193148) do
 
   create_table "properties", force: :cascade do |t|
     t.string "title"
@@ -24,6 +24,8 @@ ActiveRecord::Schema.define(version: 2021_10_01_183145) do
     t.decimal "daily_rate"
     t.integer "property_type_id", null: false
     t.integer "region_id", null: false
+    t.integer "property_owner_id", null: false
+    t.index ["property_owner_id"], name: "index_properties_on_property_owner_id"
     t.index ["property_type_id"], name: "index_properties_on_property_type_id"
     t.index ["region_id"], name: "index_properties_on_region_id"
   end
@@ -52,6 +54,7 @@ ActiveRecord::Schema.define(version: 2021_10_01_183145) do
     t.datetime "updated_at", precision: 6, null: false
   end
 
+  add_foreign_key "properties", "property_owners"
   add_foreign_key "properties", "property_types"
   add_foreign_key "properties", "regions"
 end

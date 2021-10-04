@@ -8,16 +8,17 @@ describe 'Visitor filter properties' do
     sitio = PropertyType.create!(description: 'Sítio')
     rio_de_janeiro  = Region.create!(property_location: 'Rio de Janeiro')
     amazonas = Region.create!(property_location: 'Amazonas')
-
+    peter = PropertyOwner.create!(email: 'peter@parker.com', password: '123456789')
+    
     Property.create!( title: 'Casa com quintal em Copacabana', 
                       description: 'Excelente casa, recém reformada com 2 vagas de garagem',
                       rooms: 3, parking_slot: true, bathrooms: 2, pets: true, daily_rate: 500,
-                      property_type: casa, region: rio_de_janeiro  
+                      property_type: casa, region: rio_de_janeiro, property_owner: peter
                     )
     Property.create!(title: 'Cobertura em Manaus', 
                     description: 'Cobertura de 300m2, churrasqueira e sauna privativa',
                     rooms: 5, bathrooms:2, parking_slot: false, daily_rate: 500, pets: true,
-                    property_type: apartamento, region: amazonas
+                    property_type: apartamento, region: amazonas, property_owner: peter
                     )
     # Act
     visit root_path
@@ -32,7 +33,7 @@ describe 'Visitor filter properties' do
 
   it 'of property type successfully' do
     # Arrange
-    property_owner = PropertyOwner.create!(email: 'admin@admin.com', password: '123456')
+    peter = PropertyOwner.create!(email: 'peter@parker.com', password: '123456789')
     
     casa = PropertyType.create!(description: 'Casa')
     apartamento = PropertyType.create!(description: 'Apartamento')
@@ -42,15 +43,15 @@ describe 'Visitor filter properties' do
     Property.create!( title: 'Casa com quintal em Copacabana', 
                       description: 'Excelente casa, recém reformada com 2 vagas de garagem',
                       rooms: 3, parking_slot: true, bathrooms: 2, pets: true, daily_rate: 500,
-                      property_type: casa, region: rio_de_janeiro
+                      property_type: casa, region: rio_de_janeiro, property_owner: peter
                       )
     Property.create!(title: 'Cobertura em Manaus', 
                     description: 'Cobertura de 300m2, churrasqueira e sauna privativa',
                     rooms: 5, bathrooms:2, parking_slot: false, daily_rate: 500, pets: true,
-                    property_type: apartamento, region: amazonas
+                    property_type: apartamento, region: amazonas, property_owner: peter
                     )
     # Act
-    login_as property_owner, scope: :property_owner
+    login_as peter, scope: :property_owner
     visit root_path
     click_on 'Casa'
 
@@ -62,26 +63,27 @@ describe 'Visitor filter properties' do
 
   it 'of region successfully' do
     # Arrange
-    property_owner = PropertyOwner.create!(email: 'admin@admin.com', password: '123456')
-    
+    peter = PropertyOwner.create!(email: 'peter@parker.com', password: '123456789')
+
     apartamento = PropertyType.create!(description: 'Apartamento')
     casa = PropertyType.create!(description: 'Casa')
     sitio = PropertyType.create!(description: 'Sítio')
+
     rio_de_janeiro  = Region.create!(property_location: 'Rio de Janeiro')
     amazonas = Region.create!(property_location: 'Amazonas')
   
     Property.create!( title: 'Casa com quintal em Copacabana', 
                       description: 'Excelente casa, recém reformada com 2 vagas de garagem',
                       rooms: 3, parking_slot: true, bathrooms: 2, pets: true, daily_rate: 500,
-                      property_type: casa, region: rio_de_janeiro
+                      property_type: casa, region: rio_de_janeiro, property_owner: peter
                       )
     Property.create!(title: 'Cobertura em Manaus', 
                     description: 'Cobertura de 300m2, churrasqueira e sauna privativa',
                     rooms: 5, bathrooms:2, parking_slot: false, daily_rate: 500, pets: true,
-                    property_type: apartamento, region: amazonas
+                    property_type: apartamento, region: amazonas, property_owner: peter
                     )
     # Act
-    login_as property_owner, scope: :property_owner
+    login_as peter, scope: :property_owner
     visit root_path
     click_on 'Amazonas'
 
