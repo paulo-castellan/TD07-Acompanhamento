@@ -1,4 +1,5 @@
 class PropertyTypesController < ApplicationController
+  before_action :authenticate_property_owner!
   
   def index
     @property_types = PropertyType.all

@@ -32,12 +32,13 @@ describe 'Visitor filter properties' do
 
   it 'of property type successfully' do
     # Arrange
+    property_owner = PropertyOwner.create!(email: 'admin@admin.com', password: '123456')
+    
     casa = PropertyType.create!(description: 'Casa')
     apartamento = PropertyType.create!(description: 'Apartamento')
     sitio = PropertyType.create!(description: 'Sítio')
     rio_de_janeiro  = Region.create!(property_location: 'Rio de Janeiro')
     amazonas = Region.create!(property_location: 'Amazonas')
-  
     Property.create!( title: 'Casa com quintal em Copacabana', 
                       description: 'Excelente casa, recém reformada com 2 vagas de garagem',
                       rooms: 3, parking_slot: true, bathrooms: 2, pets: true, daily_rate: 500,
@@ -49,6 +50,7 @@ describe 'Visitor filter properties' do
                     property_type: apartamento, region: amazonas
                     )
     # Act
+    login_as property_owner, scope: :property_owner
     visit root_path
     click_on 'Casa'
 
@@ -60,6 +62,8 @@ describe 'Visitor filter properties' do
 
   it 'of region successfully' do
     # Arrange
+    property_owner = PropertyOwner.create!(email: 'admin@admin.com', password: '123456')
+    
     apartamento = PropertyType.create!(description: 'Apartamento')
     casa = PropertyType.create!(description: 'Casa')
     sitio = PropertyType.create!(description: 'Sítio')
@@ -77,6 +81,7 @@ describe 'Visitor filter properties' do
                     property_type: apartamento, region: amazonas
                     )
     # Act
+    login_as property_owner, scope: :property_owner
     visit root_path
     click_on 'Amazonas'
 

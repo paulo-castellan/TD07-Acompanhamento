@@ -48,6 +48,9 @@ describe 'Visitor visit homepage' do
     sitio = PropertyType.create!(description: 'Sítio')
     rio_de_janeiro  = Region.create!(property_location: 'Rio de Janeiro')
     amazonas = Region.create!(property_location: 'Amazonas')
+    property_owner = PropertyOwner.create!(email: 'admin@admin.com', password: '123456')
+    
+  
 
     Property.create!( title: 'Casa com quintal em Copacabana', 
                       description: 'Excelente casa, recém reformada com 2 vagas de garagem',
@@ -61,6 +64,8 @@ describe 'Visitor visit homepage' do
                     )
 
     #Act => Agir (executar a funcionalidade)
+
+    login_as property_owner, scope: :property_owner
     visit root_path
     click_on 'Casa com quintal em Copacabana'
 
@@ -81,7 +86,8 @@ describe 'Visitor visit homepage' do
     sitio = PropertyType.create!(description: 'Sítio')
     rio_de_janeiro  = Region.create!(property_location: 'Rio de Janeiro')
     amazonas = Region.create!(property_location: 'Amazonas')
-
+    property_owner = PropertyOwner.create!(email: 'admin@admin.com', password: '123456')
+    
     Property.create!( title: 'Casa com quintal em Copacabana', 
                       description: 'Excelente casa, recém reformada com 2 vagas de garagem',
                       rooms: 3, parking_slot: true, bathrooms: 2, pets: true, daily_rate: 500,
@@ -94,6 +100,7 @@ describe 'Visitor visit homepage' do
                     )
                     
     #Act => Agir (executar a funcionalidade)
+    login_as property_owner, scope: :property_owner
     visit root_path
     click_on 'Casa com quintal em Copacabana'
     click_on 'Voltar'

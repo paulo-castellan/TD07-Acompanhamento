@@ -11,7 +11,16 @@
   </head>
 
   <body>
-    <%= link_to 'Início', root_path, style:"font-size: 20pt" %>
+    <nav>
+    <div><%= link_to 'Início', root_path, style:"font-size: 20pt" %></div>
+    <% if property_owner_signed_in? %>
+      <%= current_property_owner.email %>
+      <%= link_to 'Logout', destroy_property_owner_session_path, method: :delete  %>
+    <% else %>
+      <%= link_to 'Entrar', new_property_owner_session_path %>
+    <% end %>
+    </nav>
+    <%= notice %>
     <%= yield %>
   </body>
 </html>

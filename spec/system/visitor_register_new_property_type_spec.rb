@@ -3,8 +3,10 @@ require 'rails_helper'
 describe 'Visitor register property type' do
   it 'successfully' do
     #Arrange
-
+    property_owner = PropertyOwner.create!(email: 'admin@admin.com', password: '123456')
+    
     #Act
+    login_as property_owner, scope: :property_owner
     visit root_path
     click_on 'Tipos de Imóveis'
     click_on 'Novo Tipo de Imóvel'
@@ -17,7 +19,10 @@ describe 'Visitor register property type' do
   end
 
   it 'receive an error message when register an empty property type' do
+    property_owner = PropertyOwner.create!(email: 'admin@admin.com', password: '123456')
     
+    # Act
+    login_as property_owner, scope: :property_owner
     visit root_path
     visit root_path
     click_on 'Tipos de Imóveis'
@@ -30,9 +35,10 @@ describe 'Visitor register property type' do
   end 
 
   it 'receive an error message when tries to register an already registered property type' do
-    
+    property_owner = PropertyOwner.create!(email: 'admin@admin.com', password: '123456')
     PropertyType.create!({description: 'flats'})
     
+    login_as property_owner, scope: :property_owner
     visit root_path
     visit root_path
     click_on 'Tipos de Imóveis'

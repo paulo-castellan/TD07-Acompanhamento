@@ -2,7 +2,9 @@
   <h1>Flats</h1>
   <h3>Boas vindas ao sistema de locação de apartamentos</h3>
   <nav>
-    <div><%= link_to 'Cadastrar Imóvel', new_property_path %></div>
+    <% if property_owner_signed_in? %>
+      <div><%= link_to 'Cadastrar Imóvel', new_property_path %></div>
+    <% end%>
     <div><%= link_to 'Tipos de Imóveis', property_types_path %></div>
     <div><%= link_to 'Regiões', regions_path %></div>
   </nav>

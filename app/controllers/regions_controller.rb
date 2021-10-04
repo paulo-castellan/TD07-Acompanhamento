@@ -1,4 +1,6 @@
 class RegionsController < ApplicationController
+  before_action :authenticate_property_owner!
+  
   def index
     @regions = Region.all
   end

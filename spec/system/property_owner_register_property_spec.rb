@@ -1,12 +1,19 @@
 require 'rails_helper'
 
-describe 'Visitor register property' do
+describe 'Property Owner register property' do
+  it 'must be signed in' do
+    visit root_path
+
+    expect(page).not_to have_link('Cadastrar Imóvel')
+  end
   it 'successfully' do
     #Arrange
     PropertyType.create!(description: 'Casa')
     Region.create!(property_location: 'Rio de Janeiro')
-
-    #Act
+    property_owner = PropertyOwner.create!(email: 'owner@onwer.com', password: '123456789')
+    
+    # Act
+    login_as property_owner, scope: :property_owner
     visit root_path
     click_on 'Cadastrar Imóvel'
     fill_in 'Título', with: 'Casa em Florianópolis'
@@ -32,26 +39,31 @@ describe 'Visitor register property' do
   end
 
   it 'and must fill all fields' do
+    property_owner = PropertyOwner.create!(email: 'owner@onwer.com', password: '123456789')
+    
+    # Act
+    login_as property_owner, scope: :property_owner
     visit root_path
     click_on 'Cadastrar Imóvel'
     click_on 'Enviar'
 
-    expect(page).to have_content('não pode ficar em branco', count: 5)
-    #expect(page).to have_content('Título não pode ficar em branco')
-    #expect(page).to have_content('Descrição não pode ficar em branco')
-    #expect(page).to have_content('Quartos não pode ficar em branco')
-    #expect(page).to have_content('Banheiros não pode ficar em branco')
-    #expect(page).to have_content('Diária não pode ficar em branco')
+    
+    expect(page).to have_content('Título não pode ficar em branco')
+    expect(page).to have_content('Descrição não pode ficar em branco')
+    expect(page).to have_content('Quartos não pode ficar em branco')
+    expect(page).to have_content('Banheiros não pode ficar em branco')
+    expect(page).to have_content('Diária não pode ficar em branco')
     expect(Property.count).to eq(0)
   end
     
   it 'and confirms that bathrooms, daily_rate and rooms are integers' do
-    #TODO: verificar que rooms, daily_rate, bathrooms são numéricos
     #Arrange
     PropertyType.create!(description: 'Casa')
     Region.create!(property_location: 'Rio de Janeiro')
-  
+    property_owner = PropertyOwner.create!(email: 'owner@onwer.com', password: '123456789')
+    
     # Act
+    login_as property_owner, scope: :property_owner
     visit root_path
     click_on 'Cadastrar Imóvel'
     fill_in 'Título', with: 'Casa em Florianópolis'
@@ -76,8 +88,11 @@ describe 'Visitor register property' do
   it 'receive an error when puts bathrooms, rooms or daily rate equal to 0' do
     # Arrange
     PropertyType.create!(description: 'Casa')
+    property_owner = PropertyOwner.create!(email: 'owner@onwer.com', password: '123456789')
+
     
     # Act
+    login_as property_owner, scope: :property_owner
     visit root_path
     click_on 'Cadastrar Imóvel'
     fill_in 'Título', with: 'Casa em Florianópolis'
@@ -96,5 +111,11 @@ describe 'Visitor register property' do
     expect(page).to have_content('Diária deve ser maior que 0')
     
     expect(Property.count).to eq(0)
+  end
+
+  it 'cant be accessed via route' do
+    visit new_property_type_path
+
+    expect(current_path).to eq(new_property_owner_session_path)
   end
 end

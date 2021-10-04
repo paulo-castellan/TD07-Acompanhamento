@@ -1,0 +1,13 @@
+pt-BR:
+  activerecord:
+    models:
+      property_owner: Proprietário
+    attributes:
+      property_owner:
+        email: E-mail
+        password: Senha
+        password_confirmation: Confirme a senha
+        minimum_password_length: Caracteres mínimos
+        remember_me: Lembrar-me
+        new_password_path: Esqueceu a senha?
+        sign_up: Cadastrar
